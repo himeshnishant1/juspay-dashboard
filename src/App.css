@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 0px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-custom: 1150px;
+  
+  --color-primary-50: #e3f2fd;
+  --color-primary-100: #bbdefb;
+  --color-primary-200: #90caf9;
+  --color-primary-300: #64b5f6;
+  --color-primary-400: #42a5f5;
+  --color-primary-500: #2196f3;
+  --color-primary-600: #1e88e5;
+  --color-primary-700: #1976d2;
+  --color-primary-800: #1565c0;
+  --color-primary-900: #0d47a1;
+  
+  --color-secondary-50: #fce4ec;
+  --color-secondary-100: #f8bbd9;
+  --color-secondary-200: #f48fb1;
+  --color-secondary-300: #f06292;
+  --color-secondary-400: #ec407a;
+  --color-secondary-500: #e91e63;
+  --color-secondary-600: #d81b60;
+  --color-secondary-700: #c2185b;
+  --color-secondary-800: #ad1457;
+  --color-secondary-900: #880e4f;
+  
+  --font-family-sans: Inter, Roboto, Helvetica, Arial, sans-serif;
+  
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-button-primary: 0 4px 12px rgba(25, 118, 210, 0.3);
+  
+  --animate-fade-in: fadeIn 0.3s ease-in-out;
+  --animate-slide-in: slideIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  0% { transform: translateX(-20px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Custom Tailwind Components */
+@layer components {
+  /* Button Components */
+  .btn-primary {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    @apply text-white border-0 px-6 py-3 rounded-lg font-medium cursor-pointer transition-all duration-200 hover:-translate-y-0.5;
+  }
+  
+  .btn-primary:hover {
+    box-shadow: var(--shadow-button-primary);
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary-700 border border-primary-700 px-6 py-3 rounded-lg font-medium cursor-pointer transition-all duration-200 hover:bg-primary-700 hover:text-white hover:-translate-y-0.5;
+  }
+
+  /* Card Components */
+  .card {
+    @apply bg-white rounded-xl p-6 transition-all duration-200 hover:-translate-y-0.5;
+    box-shadow: var(--shadow-card);
+  }
+  
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Status Indicators */
+  .status-dot {
+    @apply w-2 h-2 rounded-full inline-block mr-2;
+  }
+
+  .status-in-progress {
+    @apply bg-primary-700;
+  }
+
+  .status-complete {
+    @apply bg-green-500;
+  }
+
+  .status-pending {
+    @apply bg-blue-500;
+  }
+
+  .status-approved {
+    @apply bg-orange-500;
+  }
+
+  .status-rejected {
+    @apply bg-red-500;
+  }
+
+  /* Loading Animation */
+  .loading {
+    @apply inline-block w-5 h-5 border-3 border-gray-200 border-t-primary-700 rounded-full animate-spin;
+  }
+
+  /* Animation Classes */
+  .fade-in {
+    animation: var(--animate-fade-in);
+  }
+
+  .slide-in {
+    animation: var(--animate-slide-in);
+  }
+
+  /* Responsive Utilities */
+  .hide-mobile {
+    @apply hidden md:block;
+  }
+
+  .hide-desktop {
+    @apply block md:hidden;
+  }
+
+  .hide-print {
+    @apply print:hidden;
+  }
+}
+
+/* Custom Scrollbar */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-sm;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+/* Base Styles */
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply text-base;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply m-0 font-sans antialiased bg-white leading-relaxed text-gray-800;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Focus Styles - Remove blue outline */
+  button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:active,
+  input:active,
+  select:active,
+  textarea:active,
+  *:focus,
+  *:active {
+    @apply outline-none shadow-none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    @apply border-2 border-black;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .card {
+    @apply m-2 rounded-lg;
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply px-5 py-2.5 text-sm;
+  }
+}
+
+/* Tablet specific styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card {
+    @apply m-3;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1440px) {
+  .container {
+    @apply max-w-7xl mx-auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  .card {
+    @apply shadow-none border border-gray-300;
+  }
+}
+
+/* Custom breakpoint utilities for 1150px */
+@layer utilities {
+  .hide-below-1150 {
+    @apply hidden;
+  }
+  
+  @media (min-width: 1150px) {
+    .hide-below-1150 {
+      @apply block;
+    }
+  }
+  
+  .show-above-1150 {
+    @apply block;
+  }
+  
+  @media (max-width: 1149px) {
+    .show-above-1150 {
+      @apply hidden;
+    }
+  }
+}
