@@ -19,6 +19,8 @@ import {
   FormControl,
   Select,
   Chip,
+  useMediaQuery,
+  useTheme as useMuiTheme,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -77,6 +79,14 @@ const convertDateToSortable = (dateStr) => {
 
 const OrderList = () => {
   const { isDarkMode } = useTheme();
+  const muiTheme = useMuiTheme();
+  
+  // Responsive breakpoints
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(muiTheme.breakpoints.down('md'));
+  const isSmallScreen = useMediaQuery('(max-width: 768px)');
+  const isVerySmallScreen = useMediaQuery('(max-width: 480px)');
+  
   const [selectedOrders, setSelectedOrders] = useState(['#CM9804']);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -267,10 +277,12 @@ const OrderList = () => {
 
   return (
     <Box sx={{ 
-      p: { xs: 2, sm: 3 }, 
+      p: { xs: 1, sm: 2, md: 3 }, 
       backgroundColor: isDarkMode ? '#1c1c1c' : '#ffffff', 
       minHeight: '100vh',
       overflow: 'hidden',
+      width: '100%',
+      maxWidth: '100%',
     }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -278,13 +290,13 @@ const OrderList = () => {
         transition={{ duration: 0.5 }}
       >
         {/* Page Title */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: { xs: 2, sm: 3 } }}>
           <Typography 
             variant="h4" 
             sx={{ 
               color: isDarkMode ? '#ffffff' : '#1C1C1C', 
               fontWeight: 600, 
-              fontSize: '1.6rem',
+              fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' },
               lineHeight: 1.2,
               fontStyle: 'semibold',
             }}
@@ -296,15 +308,23 @@ const OrderList = () => {
         {/* Top Toolbar */}
         <Box sx={{ 
           display: 'flex', 
+          flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: 'space-between', 
-          alignItems: 'center', 
-          mb: 3,
+          alignItems: { xs: 'stretch', sm: 'center' },
+          gap: { xs: 2, sm: 0 },
+          mb: { xs: 2, sm: 3 },
           backgroundColor: isDarkMode ? '#333333' : 'transparent',
           borderRadius: 2,
-          p: 2,
+          p: { xs: 1.5, sm: 2 },
         }}>
           {/* Left Side - Action Icons */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: { xs: 1, sm: 2 },
+            justifyContent: { xs: 'center', sm: 'flex-start' },
+            width: { xs: '100%', sm: 'auto' },
+          }}>
             <IconButton
               sx={{
                 color: isDarkMode ? '#ffffff' : '#1C1C1C',
@@ -347,7 +367,7 @@ const OrderList = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             sx={{
-              width: { xs: 200, sm: 250, md: 300 },
+              width: { xs: '100%', sm: 250, md: 300 },
               '& .MuiOutlinedInput-root': {
                 borderRadius: 2,
                 backgroundColor: isDarkMode ? '#1f1f1f' : '#f8f9fa',
@@ -415,7 +435,7 @@ const OrderList = () => {
             },
           }}
         >
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: { xs: 1, sm: 2 } }}>
             <Typography sx={{ fontSize: '0.875rem', fontWeight: 500, mb: 2, color: isDarkMode ? '#ffffff' : '#1C1C1C' }}>
               Filter Orders
             </Typography>
@@ -505,7 +525,7 @@ const OrderList = () => {
             },
           }}
         >
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: { xs: 1, sm: 2 } }}>
             <Typography sx={{ fontSize: '0.875rem', fontWeight: 500, mb: 2, color: isDarkMode ? '#ffffff' : '#1C1C1C' }}>
               Sort Orders
             </Typography>
@@ -644,12 +664,25 @@ const OrderList = () => {
         )}
 
         {/* Results Info */}
-        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography sx={{ color: '#666', fontSize: '0.875rem' }}>
+        <Box sx={{ 
+          mb: 2, 
+          display: 'flex', 
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'space-between', 
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          gap: { xs: 1, sm: 0 },
+        }}>
+          <Typography sx={{ 
+            color: isDarkMode ? '#9ca3af' : '#666', 
+            fontSize: { xs: '0.75rem', sm: '0.875rem' } 
+          }}>
             Showing {startIndex + 1}-{Math.min(endIndex, filteredOrders.length)} of {filteredOrders.length} orders
           </Typography>
           {searchTerm && (
-            <Typography sx={{ color: '#666', fontSize: '0.875rem' }}>
+            <Typography sx={{ 
+              color: isDarkMode ? '#9ca3af' : '#666', 
+              fontSize: { xs: '0.75rem', sm: '0.875rem' } 
+            }}>
               Search results for "{searchTerm}"
             </Typography>
           )}
@@ -663,12 +696,28 @@ const OrderList = () => {
             boxShadow: 'none',
             overflowX: 'auto',
             maxWidth: '100%',
+            maxHeight: { xs: 400, sm: 500, md: 600 },
+            '&::-webkit-scrollbar': {
+              width: '8px',
+              height: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: isDarkMode ? '#374151' : '#f1f1f1',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: isDarkMode ? '#6b7280' : '#c1c1c1',
+              borderRadius: '4px',
+            },
           }}
         >
-          <Table sx={{ minWidth: 800, tableLayout: 'fixed' }}>
+          <Table sx={{ 
+            minWidth: { xs: 600, sm: 800, md: 1000 }, 
+            tableLayout: 'fixed',
+            width: '100%',
+          }}>
             <TableHead>
               <TableRow sx={{ borderBottom: isDarkMode ? '1px solid #374151' : '1px solid #e0e0e0' }}>
-                <TableCell sx={{ border: 'none', p: 2, width: '50px' }}>
+                <TableCell sx={{ border: 'none', p: { xs: 1, sm: 2 }, width: '50px' }}>
                   <Checkbox
                     checked={selectedOrders.length === currentOrders.length && currentOrders.length > 0}
                     indeterminate={selectedOrders.length > 0 && selectedOrders.length < currentOrders.length}
@@ -683,7 +732,7 @@ const OrderList = () => {
                 </TableCell>
                 <TableCell sx={{ 
                   border: 'none', 
-                  p: 2, 
+                  p: { xs: 1, sm: 2 }, 
                   color: '#999', 
                   fontSize: '0.875rem', 
                   fontWeight: 500,
@@ -694,7 +743,7 @@ const OrderList = () => {
                 </TableCell>
                 <TableCell sx={{ 
                   border: 'none', 
-                  p: 2, 
+                  p: { xs: 1, sm: 2 }, 
                   color: '#999', 
                   fontSize: '0.875rem', 
                   fontWeight: 500,
@@ -705,7 +754,7 @@ const OrderList = () => {
                 </TableCell>
                 <TableCell sx={{ 
                   border: 'none', 
-                  p: 2, 
+                  p: { xs: 1, sm: 2 }, 
                   color: '#999', 
                   fontSize: '0.875rem', 
                   fontWeight: 500,
@@ -716,7 +765,7 @@ const OrderList = () => {
                 </TableCell>
                 <TableCell sx={{ 
                   border: 'none', 
-                  p: 2, 
+                  p: { xs: 1, sm: 2 }, 
                   color: '#999', 
                   fontSize: '0.875rem', 
                   fontWeight: 500,
@@ -727,7 +776,7 @@ const OrderList = () => {
                 </TableCell>
                 <TableCell sx={{ 
                   border: 'none', 
-                  p: 2, 
+                  p: { xs: 1, sm: 2 }, 
                   color: '#999', 
                   fontSize: '0.875rem', 
                   fontWeight: 500,
@@ -738,7 +787,7 @@ const OrderList = () => {
                 </TableCell>
                 <TableCell sx={{ 
                   border: 'none', 
-                  p: 2, 
+                  p: { xs: 1, sm: 2 }, 
                   color: '#999', 
                   fontSize: '0.875rem', 
                   fontWeight: 500,
@@ -770,7 +819,7 @@ const OrderList = () => {
                     },
                   }}
                 >
-                  <TableCell sx={{ border: 'none', p: 2, width: '50px' }}>
+                  <TableCell sx={{ border: 'none', p: { xs: 1, sm: 2 }, width: '50px' }}>
                     <Checkbox
                       checked={isSelected(order.id)}
                       onChange={() => handleSelectOrder(order.id)}
@@ -784,7 +833,7 @@ const OrderList = () => {
                   </TableCell>
                   <TableCell sx={{ 
                     border: 'none', 
-                    p: 2, 
+                    p: { xs: 1, sm: 2 }, 
                     color: isDarkMode ? '#ffffff' : '#1C1C1C', 
                     fontSize: '0.875rem',
                     width: '120px',
@@ -796,7 +845,7 @@ const OrderList = () => {
                   </TableCell>
                   <TableCell sx={{ 
                     border: 'none', 
-                    p: 2,
+                    p: { xs: 1, sm: 2 },
                     width: '150px',
                     minWidth: '150px',
                   }}>
@@ -819,7 +868,7 @@ const OrderList = () => {
                   </TableCell>
                   <TableCell sx={{ 
                     border: 'none', 
-                    p: 2, 
+                    p: { xs: 1, sm: 2 }, 
                     color: isDarkMode ? '#ffffff' : '#1C1C1C', 
                     fontSize: '0.875rem',
                     width: '180px',
@@ -831,7 +880,7 @@ const OrderList = () => {
                   </TableCell>
                   <TableCell sx={{ 
                     border: 'none', 
-                    p: 2,
+                    p: { xs: 1, sm: 2 },
                     width: '200px',
                     minWidth: '200px',
                   }}>
@@ -854,7 +903,7 @@ const OrderList = () => {
                   </TableCell>
                   <TableCell sx={{ 
                     border: 'none', 
-                    p: 2,
+                    p: { xs: 1, sm: 2 },
                     width: '120px',
                     minWidth: '120px',
                   }}>
@@ -874,7 +923,7 @@ const OrderList = () => {
                   </TableCell>
                   <TableCell sx={{ 
                     border: 'none', 
-                    p: 2,
+                    p: { xs: 1, sm: 2 },
                     width: '120px',
                     minWidth: '120px',
                   }}>
@@ -914,10 +963,15 @@ const OrderList = () => {
         </TableContainer>
 
         {/* Pagination */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: { xs: 'center', sm: 'flex-end' }, 
+          mt: { xs: 2, sm: 3 },
+          overflow: 'auto',
+        }}>
+          <Stack direction="row" spacing={{ xs: 0.5, sm: 1 }} alignItems="center">
             <IconButton
-              size="small"
+              size={isVerySmallScreen ? "small" : "medium"}
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
               sx={{
@@ -925,6 +979,8 @@ const OrderList = () => {
                 '&:hover': {
                   backgroundColor: currentPage === 1 ? 'transparent' : (isDarkMode ? '#333333' : '#f5f5f5'),
                 },
+                minWidth: { xs: 32, sm: 40 },
+                minHeight: { xs: 32, sm: 40 },
                 '&:disabled': {
                   color: '#ccc',
                 },
@@ -937,8 +993,8 @@ const OrderList = () => {
               <Box
                 key={page}
                 sx={{
-                  width: 32,
-                  height: 32,
+                  width: { xs: 28, sm: 32 },
+                  height: { xs: 28, sm: 32 },
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -954,7 +1010,7 @@ const OrderList = () => {
               >
                 <Typography
                   sx={{
-                    fontSize: '0.875rem',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
                     color: isDarkMode ? '#ffffff' : '#1C1C1C',
                     fontWeight: page === currentPage ? 500 : 400,
                   }}
@@ -965,7 +1021,7 @@ const OrderList = () => {
             ))}
             
             <IconButton
-              size="small"
+              size={isVerySmallScreen ? "small" : "medium"}
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
               sx={{
@@ -976,6 +1032,8 @@ const OrderList = () => {
                 '&:disabled': {
                   color: '#ccc',
                 },
+                minWidth: { xs: 32, sm: 40 },
+                minHeight: { xs: 32, sm: 40 },
               }}
             >
               <Typography sx={{ fontSize: '0.875rem' }}>&gt;</Typography>

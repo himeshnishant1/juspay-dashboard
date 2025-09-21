@@ -2,6 +2,68 @@
 
 A modern, responsive dashboard application built with React, Material-UI, and Tailwind CSS. Features include order management, analytics charts, and a comprehensive admin interface with dark/light theme support.
 
+## 🧭 Navigation Overview
+
+The application features a hierarchical navigation structure accessible through the left sidebar:
+
+### **Main Navigation:**
+- **🏠 Default (Dashboard)**: Click on "Default" to access the main **E-commerce Dashboard** with:
+  - KPI cards (Customers, Orders, Revenue, Growth)
+  - Revenue charts and analytics
+  - Interactive world map
+  - Top selling products table
+  - Total sales breakdown
+
+### **User Profile Section:**
+- **👤 User Profile > Overview**: Navigate to **Order List Screen** featuring:
+  - Complete order management system
+  - Advanced filtering and search capabilities
+  - Sorting by multiple criteria
+  - Pagination for large datasets
+  - Responsive design for all screen sizes
+
+### **Quick Access:**
+- Use the sidebar navigation to switch between different sections
+- Each section provides specialized functionality for different aspects of the application
+- The active page is highlighted in the sidebar for easy orientation
+
+## 📋 Table of Contents
+
+- [🧭 Navigation Overview](#-navigation-overview)
+- [🚀 Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📋 Prerequisites](#-prerequisites)
+- [🔧 Installation & Setup](#-installation--setup)
+  - [1. Clone the Repository](#1-clone-the-repository)
+  - [2. Install Dependencies](#2-install-dependencies)
+  - [3. Environment Configuration](#3-environment-configuration)
+  - [4. Start the Development Server](#4-start-the-development-server)
+  - [5. Build for Production](#5-build-for-production)
+- [📁 Project Structure](#-project-structure)
+- [🎨 Design Decisions & Architecture](#-design-decisions--architecture)
+  - [Component Architecture](#component-architecture)
+  - [Styling Strategy](#styling-strategy)
+  - [State Management](#state-management)
+- [🚧 Challenges Faced & Solutions](#-challenges-faced--solutions)
+  - [1. Tailwind CSS v4 Migration](#1-tailwind-css-v4-migration)
+  - [2. Responsive Sidebar Behavior](#2-responsive-sidebar-behavior)
+  - [3. Google Maps Integration](#3-google-maps-integration)
+  - [4. Chart Responsiveness](#4-chart-responsiveness)
+  - [5. Theme Consistency](#5-theme-consistency)
+  - [6. Theme State Management](#6-theme-state-management)
+- [🔄 Improvements Made](#-improvements-made)
+  - [Performance Optimizations](#performance-optimizations)
+  - [User Experience Enhancements](#user-experience-enhancements)
+  - [Code Quality](#code-quality)
+  - [Security](#security)
+- [🎯 Future Enhancements](#-future-enhancements)
+  - [Planned Features](#planned-features)
+  - [Technical Improvements](#technical-improvements)
+- [🤝 Contributing](#-contributing)
+- [📝 Scripts](#-scripts)
+- [🔒 Environment Variables](#-environment-variables)
+- [📄 License](#-license)
+
 ## 🚀 Features
 
 - **Responsive Design**: Optimized for all screen sizes with mobile-first approach

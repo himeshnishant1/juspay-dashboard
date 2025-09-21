@@ -20,17 +20,17 @@ import {
   GridViewOutlined as GridIcon,
   StarBorderOutlined as StarIcon,
   ViewSidebarOutlined as DashboardIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTheme as useCustomTheme } from '../contexts/ThemeContext';
 
-const Header = ({ onToggleSidebar, onToggleRightSidebar, onToggleTheme }) => {
+const Header = ({ onToggleSidebar, onToggleRightSidebar, onToggleTheme, sidebarOpen, rightSidebarOpen, isSmallScreen }) => {
   const [searchAnchorEl, setSearchAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const { isDarkMode } = useCustomTheme();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isSmallScreen = useMediaQuery('(max-width: 820px)');
 
   const handleSearchClick = (event) => {
     setSearchAnchorEl(event.currentTarget);
@@ -112,7 +112,11 @@ const Header = ({ onToggleSidebar, onToggleRightSidebar, onToggleTheme }) => {
                 },
               }}
             >
-              <DashboardIcon sx={{ fontSize: 20 }} />
+              {isSmallScreen && sidebarOpen ? (
+                <CloseIcon sx={{ fontSize: 20 }} />
+              ) : (
+                <DashboardIcon sx={{ fontSize: 20 }} />
+              )}
             </IconButton>
             <StarIcon sx={{ color: isDarkMode ? '#ffffff' : '#1C1C1C', fontSize: 20 }} />
             {!isSmallScreen && (
@@ -259,7 +263,11 @@ const Header = ({ onToggleSidebar, onToggleRightSidebar, onToggleTheme }) => {
                   },
                 }}
               >
-                <DashboardIcon />
+                {isSmallScreen && rightSidebarOpen ? (
+                  <CloseIcon />
+                ) : (
+                  <DashboardIcon />
+                )}
               </IconButton>
             </Box>
           </Box>
